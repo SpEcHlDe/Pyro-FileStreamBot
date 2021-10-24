@@ -25,7 +25,7 @@ async def private_receive_handler(c: Client, m: Message):
             if user.status == "kicked":
                 await c.send_message(
                     chat_id=m.chat.id,
-                    text="Sorry Sir, You are Banned to use me. Contact my [Support Group](https://t.me/linux_repo).",
+                    text="Sorry Sir, You are Banned to use me. Contact my [deve loper](https://t.me/nopostinthischannel).",
                     parse_mode="markdown",
                     disable_web_page_preview=True
                 )
@@ -33,7 +33,7 @@ async def private_receive_handler(c: Client, m: Message):
         except UserNotParticipant:
             await c.send_message(
                 chat_id=m.chat.id,
-                text="**Please Join My Updates Channel to use this Bot!**\n\nDue to Overload, Only Channel Subscribers can use the Bot!",
+                text="**Please Join My Updates Channel to use this Bot!**\n\nDue to my rules and regulations, Only Channel Subscribers can use the Bot!",
                 reply_markup=InlineKeyboardMarkup(
                     [
                         [
@@ -47,7 +47,7 @@ async def private_receive_handler(c: Client, m: Message):
         except Exception:
             await c.send_message(
                 chat_id=m.chat.id,
-                text="Something went Wrong. Contact my [Support Group](https://t.me/linux_repo).",
+                text="Something went Wrong. Contact my [Devel oper](https://t.me/nopostinthischannel).",
                 parse_mode="markdown",
                 disable_web_page_preview=True)
             return
@@ -103,7 +103,7 @@ async def channel_receive_handler(bot, broadcast):
             message_id=broadcast.message_id,
             reply_markup=InlineKeyboardMarkup(
                 [
-                    [InlineKeyboardButton("Get Direct Download Link", url=f"https://t.me/AH_File2Link_Bot?start=AbirHasan2005_{str(log_msg.message_id)}")]
+                    [InlineKeyboardButton("Get Direct Download Link", url=f"https://t.me/pyrobbbot_Bot?start=100{str(log_msg.message_id)}")]
                 ]
             )
         )
