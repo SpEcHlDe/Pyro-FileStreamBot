@@ -81,9 +81,14 @@ async def private_receive_handler(c: Client, m: Message):
             quote=True
         )
     except FloodWait as e:
-        print(f"Sleeping for {str(e.x)}s")
+        print(f'Sleeping for {e.x}s')
         await asyncio.sleep(e.x)
-        await c.send_message(chat_id=Var.BIN_CHANNEL, text=f"Got FloodWait of {str(e.x)}s from [{m.from_user.first_name}](tg://user?id={m.from_user.id})\n\n**User ID:** `{str(m.from_user.id)}`", disable_web_page_preview=True, parse_mode="Markdown")
+        await c.send_message(
+            chat_id=Var.BIN_CHANNEL,
+            text=f'Got FloodWait of {e.x}s from [{m.from_user.first_name}](tg://user?id={m.from_user.id})\n\n**User ID:** `{m.from_user.id}`',
+            disable_web_page_preview=True,
+            parse_mode="Markdown",
+        )
 
 
 @StreamBot.on_message(filters.channel & (filters.document | filters.video) & ~filters.edited, group=-1)
@@ -94,25 +99,36 @@ async def channel_receive_handler(bot, broadcast):
     try:
         log_msg = await broadcast.forward(chat_id=Var.BIN_CHANNEL)
         await log_msg.reply_text(
-            text=f"**Channel Name:** `{broadcast.chat.title}`\n**Channel ID:** `{broadcast.chat.id}`\n**Link:** https://t.me/AH_File2Link_Bot?start=AbirHasan2005_{str(log_msg.message_id)}",
+            text=f'**Channel Name:** `{broadcast.chat.title}`\n**Channel ID:** `{broadcast.chat.id}`\n**Link:** https://t.me/AH_File2Link_Bot?start=AbirHasan2005_{log_msg.message_id}',
             quote=True,
-            parse_mode="Markdown"
+            parse_mode="Markdown",
         )
+
         await bot.edit_message_reply_markup(
             chat_id=broadcast.chat.id,
             message_id=broadcast.message_id,
             reply_markup=InlineKeyboardMarkup(
                 [
-                    [InlineKeyboardButton("Get Direct Download Link", url=f"https://t.me/pyrobbbot_Bot?start=100{str(log_msg.message_id)}")]
+                    [
+                        InlineKeyboardButton(
+                            "Get Direct Download Link",
+                            url=f'https://t.me/pyrobbbot_Bot?start=100{log_msg.message_id}',
+                        )
+                    ]
                 ]
-            )
+            ),
         )
+
     except FloodWait as w:
-        print(f"Sleeping for {str(w.x)}s")
+        print(f'Sleeping for {w.x}s')
         await asyncio.sleep(w.x)
-        await bot.send_message(chat_id=Var.BIN_CHANNEL,
-                             text=f"Got FloodWait of {str(w.x)}s from {broadcast.chat.title}\n\n**Channel ID:** `{str(broadcast.chat.id)}`",
-                             disable_web_page_preview=True, parse_mode="Markdown")
+        await bot.send_message(
+            chat_id=Var.BIN_CHANNEL,
+            text=f'Got FloodWait of {w.x}s from {broadcast.chat.title}\n\n**Channel ID:** `{broadcast.chat.id}`',
+            disable_web_page_preview=True,
+            parse_mode="Markdown",
+        )
+
     except Exception as e:
         await bot.send_message(chat_id=Var.BIN_CHANNEL, text=f"#ERROR_TRACEBACK: `{e}`", disable_web_page_preview=True, parse_mode="Markdown")
         print(f"Can't Edit Broadcast Message!\nError: {e}")
